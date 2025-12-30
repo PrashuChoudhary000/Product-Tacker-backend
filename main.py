@@ -12,12 +12,10 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins =
-    ["https://your-vercel-app.vercel.app",
-    "http://localhost:3000"],
+    allow_origins =["*"],
+    allow_credentials=True,
     allow_methods = ["*"],
     allow_headers=["*"],
-    allow_credentials=True,
 )
 
 database_models.Base.metadata.create_all(bind=engine)
@@ -43,7 +41,7 @@ def get_db():
 def init_db():
     db = session()
 
-    count = db.query(database_models.Product).count
+    count = db.query(database_models.Product).count()
 
     if count == 0:
         for product in products:
